@@ -1,12 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+
 @Component({
-  selector: 'app-dashboard-repositories',
-  templateUrl: './dashboard-repositories.component.html',
-  styleUrls: ['./dashboard-repositories.component.css']
+  selector: 'app-dashboard-sheduler',
+  templateUrl: './dashboard-sheduler.component.html',
+  styleUrls: ['./dashboard-sheduler.component.css']
 })
-export class DashboardRepositoriesComponent implements AfterViewInit {
+export class DashboardShedulerComponent implements AfterViewInit {
+
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
