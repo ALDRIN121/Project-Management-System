@@ -4,6 +4,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+// import { ToastrModule } from 'ngx-toastr';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -17,6 +20,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardShedulerComponent } from './dashboard/dashboard-sheduler/dashboard-sheduler.component';
 import { DashboardCreateRepositoriesComponent } from './dashboard/dashboard-create-repositories/dashboard-create-repositories.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+
+
 
 @NgModule({
   declarations: [
@@ -27,6 +34,9 @@ import { DashboardCreateRepositoriesComponent } from './dashboard/dashboard-crea
     DashboardRepositoriesComponent,
     DashboardShedulerComponent,
     DashboardCreateRepositoriesComponent,
+    LoginComponent,
+    RegisterComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +46,10 @@ import { DashboardCreateRepositoriesComponent } from './dashboard/dashboard-crea
     MatPaginatorModule,
     MatTableModule,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSnackBarModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

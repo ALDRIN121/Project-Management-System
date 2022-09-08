@@ -1,1 +1,9 @@
-<app-dashboard></app-dashboard>
+<div *ngIf="!isLoggedIn">
+    <app-login (showDashboard)="showDashboard()"></app-login>
+</div>
+<div *ngIf="isLoggedIn">
+    <app-dashboard></app-dashboard>
+</div>
+<!-- <router-outlet></router-outlet> -->
+
+<!-- <app-login></app-login> -->

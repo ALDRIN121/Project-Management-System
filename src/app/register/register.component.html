@@ -1,0 +1,27 @@
+
+    <div class="circle"></div>
+    <form class="form" autocomplete="off"v [formGroup]="registerForm" autocomplete="off">
+        <h2 class="form__title" style="color: black;">Register</h2>
+        <p class="form__paragraph">Please Enter your details</p>
+        <div class="form__container">
+            <div class="form__group">
+                <input type="text" id="name" class="form__input" placeholder=" " formControlName="userName">
+                <label for="name" class="form__label">User Email:</label>
+                <span class="form__line"></span>
+            </div>
+            <div class="form__group">
+                <input type="text" id="github" class="form__input" placeholder=" " formControlName="gitHubURL">
+                <label for="github" class="form__label">github accout URL:</label>
+                <span class="form__line"></span>
+            </div>
+            <div class="form__group">
+                <input type="text" id="password" class="form__input" placeholder=" " formControlName="password">
+                <label for="password" class="form__label">Password:</label>
+                <span class="form__line"></span>
+            </div>
+            <!-- <input type="submit" class="form__submit value="Entrar" /> -->
+            <input type="button" class="form__submit" value="Register" (click)="onSubmit()">
+            <p class="form__paragraph"> <a  (click)="showLogin()" class="form__link">Login Page</a></p>
+
+        </div>
+    </form>
