@@ -4,6 +4,8 @@ import { DashboardCreateRepositoriesComponent } from './dashboard/dashboard-crea
 import { DashboardMainpgComponent } from './dashboard/dashboard-mainpg/dashboard-mainpg.component';
 import { DashboardRepositoriesComponent } from './dashboard/dashboard-repositories/dashboard-repositories.component';
 import { DashboardShedulerComponent } from './dashboard/dashboard-sheduler/dashboard-sheduler.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -14,6 +16,14 @@ const routes: Routes = [
     component:DashboardRepositoriesComponent,
     path:'repositories'
   },
+  // {
+  //   path:'register',
+  //   component:RegisterComponent
+  // },
+  // {
+  //   path:'login',
+  //   component:LoginComponent
+  // },
   {
     component:DashboardShedulerComponent,
     path:'sheduler'
