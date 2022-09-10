@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
     if(this.isLogged == "true"){
       this.showDashboard();
     }
+    else if(this.isLogged == "false"){
+      this.isLoggedIn = false;
+    }
   }
 
   showDashboard(){

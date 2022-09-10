@@ -1,0 +1,165 @@
+<!-- 
+
+
+ <div id="wrapper">
+        	
+    <div id="subscribeBox">
+        <h2><span class="thin">CREATE YOUR TASKS</span></h2>
+    
+  
+    <form class="subscribeForm"  enctype="text/plain"  autocomplete="off" [formGroup]="issueForm">
+    
+        <label class="mt-3">Name</label>
+        <input id="name" type="text" placeholder="Project Name*" formControlName="name" required>
+        <label class="mt-3 mb-3">Description</label>
+        <textarea name="task" id="task" cols="60" rows="5" formControlName="description"></textarea>
+        
+        <label class="mt-3 mb-3">Status</label>
+
+          <select class="form-control" formControlName="issueType">
+            <option value="Enhancement">Enhancement</option>
+            <option value="Major Issue">Major Issue</option>
+            <option value="Minor Issue">Minor Issue</option>
+          </select>
+        <input id="submit" type="button" value="Create" (click)="setIssue()">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+          </button>
+              
+    </form>
+            
+    </div> 
+         
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding-left: 300px; margin-top: 60px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <form class="subscribeForm"  enctype="text/plain"  autocomplete="off" [formGroup]="issueForm">
+    
+                    <label class="mt-3">Name</label>
+                    <input id="name" type="text" placeholder="*" formControlName="name" required>
+                    <label class="mt-3 mb-3">Description</label>
+                    <textarea name="task" id="task" cols="60" rows="5" formControlName="description"></textarea>
+                    
+                    <label class="mt-3 mb-3">Status</label>
+            
+                      <select class="form-control" formControlName="issueType">
+                        <option value="Enhancement">Enhancement</option>
+                        <option value="Major Issue">Major Issue</option>
+                        <option value="Minor Issue">Minor Issue</option>
+                      </select>
+                    <input id="submit" type="button" value="Create" (click)="setIssue()">
+                    
+                          
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   -->
+
+
+
+   <div class="container-fluid" style="height: 100vh;">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Issues</h1>
+        <!-- <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"> <a href="{{githubURL}}" style="color: white;">View github</a></button> -->
+        <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"> Add Issue</button>
+
+    </div>
+    <div class="row">
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="data" class="table">
+          
+              <!-- Position Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Id</h4></th>
+                <!-- <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td> -->
+                <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td>
+
+              </ng-container>
+          
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"><h4>Name</h4>  </th>
+                <td mat-cell *matCellDef="let element" style="color: black;"> {{element.name}} </td>
+              </ng-container>
+          
+              <!-- Weight Column -->
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Description</h4> </th>
+                <td mat-cell *matCellDef="let element" style="color: black;"> {{element.description}} </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="Issue Type">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Issue Type</h4> </th>
+                <td mat-cell *matCellDef="let element" style="color: black;">  {{element.issueType}} </td>
+
+               
+              </ng-container>
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            
+          </div>
+    </div>
+      
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Issues</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closebtn">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="issueForm" autocomplete="off">
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Name</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required>
+            <small id="emailHelp" class="form-text text-muted">Please enter the name of the project which has an Issue</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Description</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description" formControlName="description" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Issue Type</label>
+            <select class="form-control" formControlName="issueType">
+                <option value="Enhancement">Enhancement</option>
+                <option value="Major Issue">Major Issue</option>
+                <option value="Minor Issue">Minor Issue</option>
+              </select>
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="setIssue()">Submit</button>
+        </form>
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+
+
+

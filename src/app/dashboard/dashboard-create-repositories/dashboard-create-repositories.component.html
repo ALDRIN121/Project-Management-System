@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="row">
         <form action="" class="form-control">
             <div class="row justify-content-center">
@@ -28,4 +28,30 @@
         </form>
     </div>
 </div>
+ -->
 
+
+ <div id="wrapper" style="height: 100vh;">
+        	
+    <div id="subscribeBox">
+        <h2><span class="thin">CREATE YOUR LOCAL REPOSOTIRIES</span></h2>
+        <p>Please fill out the following information to create the Repository</p>
+    
+    <!-- Start Here: Web Form tutorial -->
+    <form class="subscribeForm" name="Subscription Form" enctype="text/plain" [formGroup]="localRepositoryForm" autocomplete="off">
+    
+        <input id="name" type="text" placeholder="Project Name*" formControlName="name" required>
+        <input id="Experience" type="number" placeholder="Project Area Experience*" formControlName="experience" required>
+    <!-- Step 1: Add an email field here -->
+        <input id="Duration" type="number" placeholder="Duration" name="Project Duration" formControlName="duration" required>
+        <input id="Effort" type="number" placeholder="Time required in hrs" name="Effort" formControlName="effort" required>
+        <input id="Entities" type="number" placeholder="Data modals used" name="entities" formControlName="entities" required>
+        <input id="Functions" type="number  " placeholder="Est total no of functions" name="functions" formControlName="functions" required>
+    <!-- Step 2: Add an address field here -->
+    <!-- Step 3: add a submit button here -->
+        <input id="submit" type="button" value="Create" (click)="createLocalRepo()">
+              
+    </form>
+            
+    </div> <!-- end subscribeBox -->
+         

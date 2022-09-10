@@ -1,11 +1,12 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center">
+        <div class="sidebar-brand-icon">
+          <img src="https://images.unsplash.com/photo-1662758949073-56537345d85d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80" alt="" style="width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" routerLink="/account">
+           
         </div>
-        <div class="sidebar-brand-text mx-3">Welcome</div>
+        <div class="sidebar-brand-text mx-3" style="color: white;">Welcome</div>
     </a>
   
     <!-- Divider -->
@@ -15,7 +16,7 @@
     <li class="nav-item">
         <a class="nav-link" routerLink="/home">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span><h3>Dashboard</h3></span></a>
     </li>
   
     <!-- Divider -->
@@ -27,17 +28,7 @@
     </div>
   
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" routerLink="/repositories">
-          <span>Repositories </span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-journal-code" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8.646 5.646a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L10.293 8 8.646 6.354a.5.5 0 0 1 0-.708zm-1.292 0a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708l2 2a.5.5 0 0 0 .708-.708L5.707 8l1.647-1.646a.5.5 0 0 0 0-.708z"/>
-            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
-            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
-          </svg>
-        </a>
-        
-    </li>
+    
 
     <li class="nav-item">
       <a class="nav-link collapsed" routerLink="/create">
@@ -72,7 +63,7 @@
   
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#">
+        <a class="nav-link collapsed" routerLink="/local">
             
             <span>Local Repositories</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-file-code" viewBox="0 0 16 16">
@@ -85,7 +76,7 @@
   
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" routerLink="/github-repositories">
           
             <span>Github Repositories</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -96,7 +87,7 @@
     </li>
   
     <li class="nav-item">
-      <a class="nav-link" href="charts.html">
+      <a class="nav-link" routerLink="/task">
         
           <span>Tasks</span>
           
@@ -109,7 +100,7 @@
           
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" routerLink="/issues">
       
         <span>Issues</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="16" fill="currentColor" class="bi bi-exclamation-octagon" viewBox="0 0 16 16">

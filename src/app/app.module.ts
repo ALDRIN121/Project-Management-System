@@ -22,6 +22,10 @@ import { DashboardShedulerComponent } from './dashboard/dashboard-sheduler/dashb
 import { DashboardCreateRepositoriesComponent } from './dashboard/dashboard-create-repositories/dashboard-create-repositories.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { GithubRepositoriesComponent } from './github-repositories/github-repositories.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { IssuesComponent } from './issues/issues.component';
+import { AccountComponent } from './account/account.component';
 
 
 
@@ -36,6 +40,10 @@ import { RegisterComponent } from './register/register.component';
     DashboardCreateRepositoriesComponent,
     LoginComponent,
     RegisterComponent,
+    GithubRepositoriesComponent,
+    TasksComponent,
+    IssuesComponent,
+    AccountComponent,
 
   ],
   imports: [
