@@ -10,7 +10,7 @@
 
         <div class="form__container">
             <div class="form__group">
-                <input type="text" id="name" class="form__input" placeholder=" " formControlName="userName">
+                <input type="text" id="name" class="form__input" placeholder=" " formControlName="userEmail">
                 <label for="name" class="form__label">User Email:</label>
                 <span class="form__line"></span>
             </div>
@@ -20,13 +20,13 @@
                 <span class="form__line"></span>
             </div> -->
             <div class="form__group">
-                <input type="text" id="password" class="form__input" placeholder=" "formControlName="password">
+                <input type="password" id="password" class="form__input" placeholder=" "formControlName="password">
                 <label for="password" class="form__label">Password:</label>
                 <span class="form__line"></span>
             </div>
             <!-- <input type="submit" class="form__submit value="Entrar" /> -->
             <input type="button" class="form__submit" value="Login" (click)="checkUserDetails()">
-        <p class="form__paragraph">If you are Please <a  (click)="showRegister()" class="form__link">Sign Up</a></p>
+        <p class="form__paragraph">If you are Please <a  (click)="showRegister()" class="form__link" style="cursor:pointer ;">Sign Up</a></p>
 
         </div>
     </form>

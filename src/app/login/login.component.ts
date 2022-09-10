@@ -10,12 +10,13 @@ import { GithubApiService } from '../services/github-api.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    userName: new FormControl(),
+    userEmail: new FormControl(),
     password: new FormControl()
   })
   showError: boolean;
   @Output() showDashboard = new EventEmitter();
   registerPage: boolean;
+  githubID: any;
   constructor(private service: GithubApiService,
     private router: Router,) { }
 
@@ -30,10 +31,17 @@ export class LoginComponent implements OnInit {
   }
 
   checkUserDetails(){
+    console.log(this.loginForm.value);
+    
     this.service.getUserDetails().subscribe((response)=>{
       console.log(response);
       for(let x of response.data){
-        if(x.username == this.loginForm.value.userName && x.password == this.loginForm.value.password){
+        if(x.useremail == this.loginForm.value.userEmail && x.password == this.loginForm.value.password){
+          // this.githubID = x.githubID;
+          console.log(x.githubID);
+          
+          sessionStorage.setItem('githubID',x.githubID)
+          sessionStorage.setItem('userID',x.id)
           this.showDashboard.emit();
           console.log("success login");
           this.showError = false

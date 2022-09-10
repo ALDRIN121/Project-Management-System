@@ -1,0 +1,18 @@
+
+
+.mat-header-row {
+  position: sticky;
+  top: -.5px;
+  z-index: 100;
+  background-color: gainsboro;
+  font-size: 12px;
+  min-height: 8vh;
+  color: #000000;
+  padding-top: 3px;
+}
+.mat-row{
+  background-color: floralwhite;
+}
+.mat-paginator {
+  background-color: rgb(94, 65, 8);
+}

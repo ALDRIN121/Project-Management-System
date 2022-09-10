@@ -1,50 +1,103 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { GithubApiService } from 'src/app/services/github-api.service';
 
 @Component({
   selector: 'app-dashboard-sheduler',
   templateUrl: './dashboard-sheduler.component.html',
   styleUrls: ['./dashboard-sheduler.component.css']
 })
-export class DashboardShedulerComponent implements AfterViewInit {
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+export class DashboardShedulerComponent implements AfterViewInit,OnInit {
+  shedulerForm = new FormGroup({
+    name: new FormControl(),
+    shedule: new FormControl()
+  })
+  shedulerEditForm = new FormGroup({
+    name: new FormControl(),
+    shedule: new FormControl()
+  })
+  displayedColumns: string[] = ['id', 'name', 'shedule','Edit','Delete'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  userID: string;
+  dataSource: MatTableDataSource<any>;
+  name: any;
+  id: any;
+  constructor(private service: GithubApiService){}
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+
+  }
+  ngOnInit() {
+    this.userID = sessionStorage.getItem('userID');
+    this.getShedule();
+  }
+  setShedule(){
+    let body ={
+      "userID": this.userID,
+      "name": this.shedulerForm.value.name,
+      "shedule": this.shedulerForm.value.shedule
+    }
+    this.service.setShedule(body).subscribe((response:any)=>{
+      console.log(response);
+      if(response.success == true){
+        document.getElementById("closebtn1").click()
+        this.getShedule()
+      }
+      
+    })
+  }
+
+  getShedule(){
+    this.service.getShedule(this.userID).subscribe((response:any)=>{
+      console.log(response);
+  this.dataSource = new MatTableDataSource<any>(response.data);
+
+      
+    })
+  }
+
+  editShedule(data:any){
+    this.shedulerEditForm.setValue({
+      name: data.name,
+      shedule: data.shedule
+    })
+    this.name = data.name;
+    this.id = data.id;
+    console.log(data);
+    this.shedulerEditForm.controls['name'].disable();
+    
+  }
+  deleteShedule(data:any){
+    console.log(data);
+    this.service.deleteShedule(data.id).subscribe((response)=>{
+      console.log(response);
+      if(response.success == true){
+        this.getShedule()
+      }
+      
+    })
+    
+  }
+  submitEditShedule(){
+    console.log(this.shedulerEditForm.value);
+    let body = {
+      "userID" : this.userID,
+      "name": this.name,
+      "shedule": this.shedulerEditForm.value.shedule
+    }
+    this.service.updateShedule(body,this.id).subscribe((response)=>{
+      console.log(response);
+      if(response.success == true){
+        document.getElementById("closebtn").click()
+        this.getShedule()
+      }
+      
+    })
+    
   }
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
+

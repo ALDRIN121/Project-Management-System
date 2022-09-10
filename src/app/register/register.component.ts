@@ -12,8 +12,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class RegisterComponent implements OnInit {
   registerForm = new FormGroup({
     userName: new FormControl(),
+    userEmail: new FormControl(),
     gitHubURL: new FormControl(),
-    password: new FormControl()
+    password: new FormControl(),
+    githubaccount: new FormControl()
   })
   @Output() loginPage = new EventEmitter();
   constructor(
@@ -34,8 +36,10 @@ export class RegisterComponent implements OnInit {
     // body.set('password',this.registerForm.value.password)
     let body ={
       "username":this.registerForm.value.userName,
+      "useremail":this.registerForm.value.userEmail,
       "github":this.registerForm.value.gitHubURL,
-      "password":this.registerForm.value.password
+      "password":this.registerForm.value.password,
+      "githubaccount":this.registerForm.value.githubaccount
     }
     this.service.insertRegisterData(body).subscribe((response:any)=>{
             if(response.success == true){
