@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { GithubApiService } from '../services/github-api.service';
 
 @Component({
@@ -18,7 +19,7 @@ accountForm = new FormGroup({
   userID: string;
   data: any;
   isEditable: boolean;
-  constructor(private service: GithubApiService) { }
+  constructor(private service: GithubApiService,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.isEditable  =false;
@@ -82,6 +83,7 @@ accountForm = new FormGroup({
         this.accountForm.controls['githubURL'].disable();
         this.accountForm.controls['password'].disable();
       this.isEditable = false;
+      this._snackBar.open(response.msg,"OK")
 
       }
       

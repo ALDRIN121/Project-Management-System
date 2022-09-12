@@ -15,6 +15,7 @@ class LocalRepo(BaseModel):
     effort:str
     entities:str
     functions:str
+    projectStatus:str
 
 class Task(BaseModel):
     userID:int
@@ -33,3 +34,13 @@ class Shedule(BaseModel):
     userID: int
     name: str
     shedule:str
+
+class AIModal(BaseModel):
+    experience:str
+    duration:str
+    entities:str
+    functions:str
+
+class Email(BaseModel):
+    userEmail:str
+    name:str

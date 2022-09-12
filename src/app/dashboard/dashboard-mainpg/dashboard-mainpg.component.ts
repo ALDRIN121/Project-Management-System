@@ -14,6 +14,9 @@ export class DashboardMainpgComponent implements OnInit {
   totalLocalRepos: any;
   userID: any;
   data1: any = [];
+  data2: any = [];
+  totalTask: number;
+  totalIssue: any;
 
   constructor(private route: Router,
     private service: GithubApiService) { }
@@ -28,6 +31,8 @@ export class DashboardMainpgComponent implements OnInit {
     this.userID = sessionStorage.getItem('userID');
     this.getRepositoryData()
     this.getLocalData()
+    this.getTasks();
+    this.getIssues();
     
     // this.localRep.ngOnInit();
     // this.totalLocalRepos = sessionStorage.getItem('totalLocalRepos');
@@ -50,6 +55,28 @@ export class DashboardMainpgComponent implements OnInit {
     this.service.getRepositories(this.userName).subscribe((response)=>{
       console.log(response);
       this.gitHubRepositoryCount = Object.keys(response).length
+    })
+  }
+  getTasks(){
+    this.service.getTask(this.userID).subscribe((response)=>{
+      console.log(response);
+      
+      this.totalTask =Object.keys(response.data).length
+      
+    })
+  }
+
+  getIssues(){
+    this.service.getIssues(this.userID).subscribe((response)=>{
+      console.log(response);
+      for(let x of response.data){
+        if(x.userID == this.userID){
+          this.data1.push(x)
+        }
+      }
+
+      this.totalIssue = this.data1.length
+      
     })
   }
 
