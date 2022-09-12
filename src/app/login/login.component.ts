@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GithubApiService } from '../services/github-api.service';
 
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   registerPage: boolean;
   githubID: any;
   constructor(private service: GithubApiService,
-    private router: Router,) { }
+    private router: Router,private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.registerPage = false
@@ -32,7 +33,11 @@ export class LoginComponent implements OnInit {
 
   checkUserDetails(){
     console.log(this.loginForm.value);
-    
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if(!this.loginForm.value.userEmail.match(mailformat))
+  {
+  this._snackBar.open("Invalid email","OK");
+  }
     this.service.getUserDetails().subscribe((response)=>{
       console.log(response);
       sessionStorage.setItem('email',this.loginForm.value.userEmail);
