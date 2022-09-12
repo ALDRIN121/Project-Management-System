@@ -21,7 +21,8 @@ localrepo=Table(
     Column('duration',String(255)),
     Column('effort',String(255)),
     Column('entities',String(255)),
-    Column('functions',String(255))
+    Column('functions',String(255)),
+    Column('projectStatus',String(255)),
 )
 
 task=Table(

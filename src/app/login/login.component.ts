@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     
     this.service.getUserDetails().subscribe((response)=>{
       console.log(response);
+      sessionStorage.setItem('email',this.loginForm.value.userEmail);
       for(let x of response.data){
         if(x.useremail == this.loginForm.value.userEmail && x.password == this.loginForm.value.password){
           // this.githubID = x.githubID;

@@ -1,9 +1,15 @@
+from curses.ascii import EM
 from multiprocessing import BoundedSemaphore
 from fastapi import FastAPI
-from schemas.schemas import Login,LocalRepo,Task,Issue,Shedule
+from schemas.schemas import Login,LocalRepo,Task,Issue,Shedule,AIModal,Email
 from config.db import con
 from models.index import login,localrepo,task,issue,shedule
 from fastapi.middleware.cors import CORSMiddleware
+import pickle
+import random
+import smtplib
+from email.message import EmailMessage
+
 app = FastAPI()
 origins = ["*"]
 app.add_middleware(
@@ -21,7 +27,7 @@ async def index():
     return {
         "success": True,
         "data":data
-    }
+    }   
 
 # insert data
 @app.post('/api/register')
@@ -51,11 +57,12 @@ async def store(body:LocalRepo):
     data=con.execute(localrepo.insert().values(
         userID = body.userID,
         name = body.name,
-        experience = body.experience,
-        duration = body.duration,
+        experience = body.experience, 
+        duration = body.duration, #lenght
         effort = body.effort,
-        entities = body.entities,
-        functions = body.functions
+        entities = body.entities, #done
+        functions = body.functions, #done
+        projectStatus= body.projectStatus
     ))
 
     if data.is_insert:
@@ -68,6 +75,47 @@ async def store(body:LocalRepo):
             "success": False,
             "msg":"Some Problem"
         }
+
+
+@app.post('/api/localRepoAI')
+async def store(body:AIModal):
+    filename = 'project.sav'
+    loaded_model = pickle.load(open(filename, 'rb'))
+    pontadjust = int(body.functions) + random.randint(0,3)
+    vec = [[int(body.duration),int(body.experience),int(body.entities),int(body.functions),pontadjust]]
+    data = loaded_model.predict(vec)[0]
+    return {
+        "success": True,
+        "data":data
+    }
+
+
+@app.post('/api/email')
+async def index(body:Email):
+    email_address = "dreamsachived@gmail.com"
+    email_password = "gkvjwhrwcqbqhxps"
+
+# create email
+    msg = EmailMessage()
+    msg['Subject'] = "Reminder Email for" + body.name
+    msg['From'] = email_address
+    msg['To'] = body.userEmail
+    msg.set_content("This is an email is a reminder for checking on your project " + body.name)
+
+# send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(email_address, email_password)
+        smtp.send_message(msg)
+
+
+@app.get('/api/getEmial/{id}')
+async def index(id:int):
+    data=con.execute(login.select().where(login.c.id==id)).fetchall()  
+    return {
+        "success": True,
+        "data":data
+    }
+
 
 @app.get('/api/localRepo/{id}')
 async def index(id:int):
@@ -118,16 +166,16 @@ async def store(body:Issue):
             "msg":"Some Problem"
         }
 
-@app.get('/api/issue')
-async def index():
-    data=con.execute(issue.select()).fetchall()
+@app.get('/api/issue/{id}')
+async def index(id:int):
+    data=con.execute(issue.select().where(issue.c.userID==id)).fetchall()
     return {
         "success": True,
         "data":data
     }
 
-@app.get('/api/task')
-async def index():
+@app.get('/api/task/{id}')
+async def index(id:int):
     data=con.execute(task.select()).fetchall()
     return {
         "success": True,
@@ -243,7 +291,8 @@ async def change(body:LocalRepo,id:int):
         duration = body.duration,
         effort = body.effort,
         entities = body.entities,
-        functions = body.functions
+        functions = body.functions,
+        projectStatus= body.projectStatus
     ).where(localrepo.c.id==id))
     if data:
         return {
@@ -270,6 +319,124 @@ async def delete(id:int):
             "msg":"Some Problem"
         }
 
+@app.put('/api/issue/{id}')
+async def change(body:Issue,id:int):
+
+    data=con.execute(issue.update().values(
+         userID = body.userID,
+        name = body.name,
+        description = body.description,
+        issueType = body.issueType,
+    ).where(issue.c.id==id))
+    if data:
+        return {
+            "success": True,
+            "msg":"Data Update Successfully"
+        }
+    else:
+         return {
+            "success": False,
+            "msg":"Some Problem"
+        }
+
+@app.delete('/api/issue/{id}')
+async def delete(id:int):
+    data=con.execute(issue.delete().where(issue.c.id==id))
+    if data:
+        return {
+            "success": True,
+            "msg":"Data Delete Successfully"
+        }
+    else:
+         return {
+            "success": False,
+            "msg":"Some Problem"
+        }
+
+@app.put('/api/task/{id}')
+async def change(body:Task,id:int):
+
+    data=con.execute(task.update().values(
+        userID = body.userID,
+        name = body.name,
+        task = body.task,
+        dueDate = body.dueDate,
+        status = body.status,
+    ).where(task.c.id==id))
+    if data:
+        return {
+            "success": True,
+            "msg":"Data Update Successfully"
+        }
+    else:
+         return {
+            "success": False,
+            "msg":"Some Problem"
+        }
+
+@app.delete('/api/task/{id}')
+async def delete(id:int):
+    data=con.execute(task.delete().where(task.c.id==id))
+    if data:
+        return {
+            "success": True,
+            "msg":"Data Delete Successfully"
+        }
+    else:
+         return {
+            "success": False,
+            "msg":"Some Problem"
+        }
+
+
+
+
+@app.get('/admin/api/localRepo')
+async def index():
+    data=con.execute(localrepo.select()).fetchall()
+    return {
+        "success": True,
+        "data":data
+    }  
+
+
+@app.get('/admin/api/issue')
+async def index():
+    data=con.execute(issue.select()).fetchall()
+    return {
+        "success": True,
+        "data":data
+    }   
+
+@app.get('/admin/api/task')
+async def index():
+    data=con.execute(task.select()).fetchall()
+    return {
+        "success": True,
+        "data":data
+    } 
+
+@app.get('/admin/api/shedule')
+async def index():
+    data=con.execute(shedule.select()).fetchall()
+    return {
+        "success": True,
+        "data":data
+    } 
+
+@app.delete('/api/login/{id}')
+async def delete(id:int):
+    data=con.execute(login.delete().where(login.c.id==id))
+    if data:
+        return {
+            "success": True,
+            "msg":"Data Delete Successfully"
+        }
+    else:
+         return {
+            "success": False,
+            "msg":"Some Problem"
+        }
 # # update data
 
 # @app.put('/api/students/{id}')

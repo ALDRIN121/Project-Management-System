@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatTableDataSource} from '@angular/material/table';
 import { GithubApiService } from 'src/app/services/github-api.service';
 
@@ -25,13 +26,18 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
   dataSource: MatTableDataSource<any>;
   name: any;
   id: any;
-  constructor(private service: GithubApiService){}
+  data: any;
+  userEmail: any;
+  shedules: any;
+  constructor(private service: GithubApiService,private _snackBar: MatSnackBar){}
   ngAfterViewInit() {
 
   }
   ngOnInit() {
     this.userID = sessionStorage.getItem('userID');
+    this.userEmail = sessionStorage.getItem('email');
     this.getShedule();
+    this.getLocalData();  
   }
   setShedule(){
     let body ={
@@ -44,6 +50,8 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
       if(response.success == true){
         document.getElementById("closebtn1").click()
         this.getShedule()
+        this._snackBar.open(response.msg,"OK");
+        this.sendEmail(this.shedulerForm.value.name)
       }
       
     })
@@ -53,7 +61,7 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
     this.service.getShedule(this.userID).subscribe((response:any)=>{
       console.log(response);
   this.dataSource = new MatTableDataSource<any>(response.data);
-
+  this.shedules = response.data;
       
     })
   }
@@ -67,7 +75,6 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
     this.id = data.id;
     console.log(data);
     this.shedulerEditForm.controls['name'].disable();
-    
   }
   deleteShedule(data:any){
     console.log(data);
@@ -75,6 +82,7 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
       console.log(response);
       if(response.success == true){
         this.getShedule()
+        this._snackBar.open(response.msg,"OK");
       }
       
     })
@@ -92,10 +100,37 @@ export class DashboardShedulerComponent implements AfterViewInit,OnInit {
       if(response.success == true){
         document.getElementById("closebtn").click()
         this.getShedule()
+        this._snackBar.open(response.msg,"OK");
       }
       
     })
+  }
+
+  getLocalData(){
+    this.service.getLocalRepo(this.userID).subscribe((response)=>{
+      console.log(response);
+      this.data = response.data;
+    })
+  }
+
+  // getEmail(){
+  //   this.service.getEmail(this.userID).subscribe((response)=>{
+  //     console.log(response);
+  //     this.userEmail = response.data.useremail;
+  //     sessionStorage.se
+  //   })
+  // }
+  sendEmail(name:any){
+    console.log(this.userEmail);
     
+    let body ={
+      userEmail: this.userEmail,
+      name: name
+    }
+    this.service.sendEmail(body).subscribe((response)=>{
+      console.log(response);
+      
+    })
   }
 }
 

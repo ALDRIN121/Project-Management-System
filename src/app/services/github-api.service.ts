@@ -34,12 +34,11 @@ export class GithubApiService {
   insertIssue(body:any){
     return this.http.post(this.url1+"/api/issue",body);
   }
-  getIssues(){
-    return this.http.get<any>(this.url1+"/api/issue");
-
+  getIssues(id:any){
+    return this.http.get<any>(this.url1+"/api/issue/"+id);
   }
-  getTask(){
-    return this.http.get<any>(this.url1+"/api/task");
+  getTask(id:any){
+    return this.http.get<any>(this.url1+"/api/task/"+id);
   }
   updateUser(body:any,id:any){
     return this.http.put<any>(this.url1+"/api/login/"+id,body)
@@ -61,6 +60,27 @@ export class GithubApiService {
   }
   deleteLocalRepo(id:any){
     return this.http.delete<any>(this.url1+"/api/localRepo/"+id)
+  }
+  updateIssue(body:any,id:any){
+    return this.http.put<any>(this.url1+"/api/issue/"+id,body)
+  }
+  deleteIssue(id:any){
+    return this.http.delete<any>(this.url1+"/api/issue/"+id)
+  }
+  updateTask(body:any,id:any){
+    return this.http.put<any>(this.url1+"/api/task/"+id,body);
+  }
+  deleteTask(id:any){
+    return this.http.delete<any>(this.url1+"/api/task/"+id)
+  }
+  localRepoAI(body:any){
+    return this.http.post<any>(this.url1+"/api/localRepoAI",body)
+  }
+  sendEmail(body:any){
+    return this.http.post<any>(this.url1+"/api/email",body);
+  }
+  getEmail(id:any){
+    return this.http.get<any>(this.url1+"/api/getEmial/"+id);
   }
 
 }

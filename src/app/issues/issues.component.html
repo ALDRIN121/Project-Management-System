@@ -82,25 +82,25 @@
         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"> Add Issue</button>
 
     </div>
-    <div class="row">
+    <!-- <div class="row">
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="data" class="table">
           
-              <!-- Position Column -->
+              
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Id</h4></th>
-                <!-- <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td> -->
+
                 <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td>
 
               </ng-container>
           
-              <!-- Name Column -->
+
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef style="color: black;"><h4>Name</h4>  </th>
                 <td mat-cell *matCellDef="let element" style="color: black;"> {{element.name}} </td>
               </ng-container>
           
-              <!-- Weight Column -->
+              
               <ng-container matColumnDef="description">
                 <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Description</h4> </th>
                 <td mat-cell *matCellDef="let element" style="color: black;"> {{element.description}} </td>
@@ -112,13 +112,84 @@
 
                
               </ng-container>
+              <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Edit</h4> </th>
+                <td mat-cell *matCellDef="let element" style="color: black;">  <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="editShedule(element)">Edit</button> </td>
+              </ng-container><ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Delete</h4> </th>
+                <td mat-cell *matCellDef="let element" style="color: black;">  <button class="btn btn-danger" (click)="deleteIssue(element)">Delete</button> </td>
+              </ng-container>
           
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
             
           </div>
-    </div>
+    </div> -->
+
+    <main class="py-6 bg-surface-secondary">
+      <div class="container-fluid">
+          <!-- Card stats -->
+        
+          <div class="card shadow border-0 mb-7">
+              <div class="card-header">
+                  <h5 class="mb-0">Issue</h5>
+              </div>
+              <div class="table-responsive">
+                  <table class="table table-hover table-nowrap">
+                      <thead class="thead-light">
+                          <tr>
+                              <th scope="col">Name</th>
+                              <th scope="col">UserID</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">Issue Type</th>
+             
+
+                              
+                              <th></th>
+                          </tr>
+                      </thead>
+                      <tbody *ngFor="let x of issue">
+                          <tr>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.name}}
+                                  </a>
+                              </td>
+                              <td class="text-heading font-semibold">
+                                  {{x.userID}}
+                              </td>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.description}}
+                                  </a>
+                              </td>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.issueType}}
+                                  </a>
+                              
+                             
+                              
+                              <td class="text-end">
+                                  &nbsp;
+      
+                                  <button type="button" class="btn btn-sm btn-square btn-success text-danger-hover ml-1" data-toggle="modal" data-target="#editModal" (click)="editIssue(x)">
+                                    <i class="bi bi-trash"> Edit</i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-square btn-danger text-danger-hover ml-1" (click)="deleteIssue(x)">
+                                  <i class="bi bi-trash">Delete</i>
+                              </button>
+                              </td>
+                          </tr>
+                 
+                      </tbody>
+                  </table>
+              </div>
+              
+          </div>
+      </div>
+  </main>
       
 </div>
 
@@ -136,7 +207,11 @@
         <form [formGroup]="issueForm" autocomplete="off">
           <div class="form-group">
             <label for="exampleInputEmail1" style="color: black;">Name</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required>
+            <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required> -->
+            <select class="form-control" formControlName="name" >
+              <option *ngFor="let x of datas" value="{{x.name}}" selected>{{x.name}}</option>
+  
+            </select>
             <small id="emailHelp" class="form-text text-muted">Please enter the name of the project which has an Issue</small>
           </div>
           <div class="form-group">
@@ -153,6 +228,45 @@
           </div>
 
           <button type="button" class="btn btn-primary" (click)="setIssue()">Submit</button>
+        </form>
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Issues</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closebtn1">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="issueForm" autocomplete="off">
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Name</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required>
+            
+            <small id="emailHelp" class="form-text text-muted">Please enter the name of the project which has an Issue</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Description</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description" formControlName="description" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1" style="color: black;">Issue Type</label>
+            <select class="form-control" formControlName="issueType">
+                <option value="Enhancement">Enhancement</option>
+                <option value="Major Issue">Major Issue</option>
+                <option value="Minor Issue">Minor Issue</option>
+              </select>
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="updateIssue()">Submit</button>
         </form>
       </div>
     

@@ -26,6 +26,7 @@ import { GithubRepositoriesComponent } from './github-repositories/github-reposi
 import { TasksComponent } from './tasks/tasks.component';
 import { IssuesComponent } from './issues/issues.component';
 import { AccountComponent } from './account/account.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -44,6 +45,7 @@ import { AccountComponent } from './account/account.component';
     TasksComponent,
     IssuesComponent,
     AccountComponent,
+    AdminComponent,
 
   ],
   imports: [

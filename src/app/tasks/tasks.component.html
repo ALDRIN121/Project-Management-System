@@ -34,30 +34,26 @@
 
     <div class="container-fluid" style="height: 100vh;">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Issues</h1>
+            <h1 class="h3 mb-0 text-gray-800">Task's</h1>
             <!-- <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"> <a href="{{githubURL}}" style="color: white;">View github</a></button> -->
             <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModal"> Add Issue</button>
     
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="mat-elevation-z8">
                 <table mat-table [dataSource]="data" class="table">
               
-                  <!-- Position Column -->
                   <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Id</h4></th>
-                    <!-- <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td> -->
                     <td mat-cell *matCellDef="let element; let i = index;" style="color: black;"> {{i+1}} </td>
     
                   </ng-container>
               
-                  <!-- Name Column -->
                   <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef style="color: black;"><h4>Name</h4>  </th>
                     <td mat-cell *matCellDef="let element" style="color: black;"> {{element.name}} </td>
                   </ng-container>
               
-                  <!-- Weight Column -->
                   <ng-container matColumnDef="task">
                     <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Task</h4> </th>
                     <td mat-cell *matCellDef="let element" style="color: black;"> {{element.task}} </td>
@@ -71,13 +67,89 @@
                     <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Status</h4> </th>
                     <td mat-cell *matCellDef="let element" style="color: black;">  {{element.status}} </td>
                   </ng-container>
+                  <ng-container matColumnDef="edit">
+                    <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Edit</h4> </th>
+                    <td mat-cell *matCellDef="let element" style="color: black;">  <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" (click)="editTask(element)">Edit</button> </td>
+                  </ng-container><ng-container matColumnDef="delete">
+                    <th mat-header-cell *matHeaderCellDef style="color: black;"> <h4>Delete</h4> </th>
+                    <td mat-cell *matCellDef="let element" style="color: black;">  <button class="btn btn-danger" (click)="deleteTask(element)">Delete</button> </td>
+                  </ng-container>
               
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
                 
               </div>
-        </div>
+        </div> -->
+
+        <main class="py-6 bg-surface-secondary">
+          <div class="container-fluid">
+              <!-- Card stats -->
+            
+              <div class="card shadow border-0 mb-7">
+                  <div class="card-header">
+                      <h5 class="mb-0">Task</h5>
+                  </div>
+                  <div class="table-responsive">
+                      <table class="table table-hover table-nowrap">
+                          <thead class="thead-light">
+                            <tr>
+                              <th scope="col">Name</th>
+                              <th scope="col">UserID</th>
+                              <th scope="col">Task</th>
+                              <th scope="col">DueDate</th>
+                              <th scope="col">Status</th>
+             
+
+                              
+                              <th></th>
+                          </tr>
+                          </thead>
+                          <tbody *ngFor="let x of task">
+                            <tr>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.name}}
+                                  </a>
+                              </td>
+                              <td class="text-heading font-semibold">
+                                  {{x.userID}}
+                              </td>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.task}}
+                                  </a>
+                              </td>
+                              <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.dueDate}}
+                                  </a>
+                              </td> <td>
+                                  <a class="text-heading font-semibold">
+                                      {{x.status}}
+                                  </a>
+                              </td>
+                             
+                              
+                              <td class="text-end">
+                                  &nbsp;
+      
+                                      <button type="button" class="btn btn-sm btn-square btn-success text-danger-hover ml-1" data-toggle="modal" data-target="#editModal" (click)="editTask(x)">
+                                          <i class="bi bi-trash"> Edit</i>
+                                      </button>
+                                      <button type="button" class="btn btn-sm btn-square btn-danger text-danger-hover ml-1" (click)="deleteTask(x)">
+                                        <i class="bi bi-trash">Delete</i>
+                                    </button>
+                                  </td>
+                              </tr>
+                             
+                          </tbody>
+                      </table>
+                  </div>
+                  
+              </div>
+          </div>
+        </main>
           
     </div>
     
@@ -95,7 +167,11 @@
             <form [formGroup]="taskForm" autocomplete="off">
               <div class="form-group">
                 <label for="exampleInputEmail1" style="color: black;">Name</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required>
+                <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required> -->
+                <select class="form-control" formControlName="name" >
+                  <option *ngFor="let x of datas" value="{{x.name}}" selected>{{x.name}}</option>
+      
+                </select>
                 <small id="emailHelp" class="form-text text-muted">Please enter the name of the project which has an Issue</small>
               </div>
               <div class="form-group">
@@ -116,6 +192,52 @@
               </div>
     
               <button type="button" class="btn btn-primary" (click)="setTask()">Submit</button>
+            </form>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit tasks</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closebtn1">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="taskForm" autocomplete="off">
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="color: black;">Name</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project Name" formControlName="name" required>
+                <!-- <select class="form-control" formControlName="name" >
+                  <option *ngFor="let x of datas" value="{{x.name}}" selected>{{x.name}}</option>
+      
+                </select> -->
+                <small id="emailHelp" class="form-text text-muted">Please enter the name of the project which has an Issue</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="color: black;">Task</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="task" formControlName="task" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="color: black;">Due Date</label>
+            <input type="date" name="dueDate" id="" formControlName="dueDate" class="form-control">
+                <!-- <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="task" formControlName="task" required> -->
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1" style="color: black;">Status</label>
+                <select class="form-control" formControlName="status">
+                    <option value="In Progress">In Progress</option>
+                    <option value="Not Started">Not Started</option>
+                  </select>
+              </div>
+    
+              <button type="button" class="btn btn-primary" (click)="updateTask()">Submit</button>
             </form>
           </div>
         
