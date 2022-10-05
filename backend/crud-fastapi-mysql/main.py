@@ -108,6 +108,51 @@ async def index(body:Email):
         smtp.send_message(msg)
 
 
+
+
+
+
+@app.post('/api/Taskemail')
+async def index(body:Email):
+    email_address = "dreamsachived@gmail.com"
+    email_password = "gkvjwhrwcqbqhxps"
+
+# create email
+    msg = EmailMessage()
+    msg['Subject'] = " Task Reminder Email for" + body.name
+    msg['From'] = email_address
+    msg['To'] = body.userEmail
+    msg.set_content("This is an email is a reminder for checking on your Tasks " + body.name)
+
+# send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(email_address, email_password)
+        smtp.send_message(msg)
+
+
+
+
+@app.post('/api/Issuemail')
+async def index(body:Email):
+    email_address = "dreamsachived@gmail.com"
+    email_password = "gkvjwhrwcqbqhxps"
+
+# create email
+    msg = EmailMessage()
+    msg['Subject'] = "Issue Reminder" + body.name
+    msg['From'] = email_address
+    msg['To'] = body.userEmail
+    msg.set_content("This is an email is a reminder for checking on your Issue Assigned to" + body.name)
+
+# send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(email_address, email_password)
+        smtp.send_message(msg)
+
+
+
+
+
 @app.get('/api/getEmial/{id}')
 async def index(id:int):
     data=con.execute(login.select().where(login.c.id==id)).fetchall()  
